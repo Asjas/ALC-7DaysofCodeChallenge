@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="This is the Currency Converter project in the Andela with Google Scholarship Program.">
+  <meta name="author" content="A-J Roos">
+
+  <title>Currency Converter</title>
+
+  <!-- Main CSS Styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display" rel="stylesheet">
+  <link rel="stylesheet" href="public/css/styles.min.css" type="text/css">
+</head>
+
+<body>
+  <!-- Main HTML Markup -->
+  <header>
+    <h1>Currency Converter</h1>
+    <h2>Choose the currencies you want to convert.</h2>
+  </header>
+
+  <main>
+    <section class="section__input">
+      <!-- Input field for the amount to be converted -->
+      <label for="amount">Enter your amount:</label>
+      <input id="amount" name="currency" type="number" min="1" value="1">
+
+      <!-- Currency Select Fields -->
+      <label for="currency_from">From:</label>
+      <select id="currency_from" class="currency_convert_from"></select>
+
+      <label for="currency_to">To:</label>
+      <select id="currency_to" class="currency_convert_to"></select>
+
+      <button class="convert_currency">Convert Currency</button>
+    </section>
+    <!-- Text areas for currencies -->
+    <section class="section__output">
+      <label for="original_currency">Original Currency</label>
+      <textarea name="original_currency" id="original_currency" cols="30" rows="10" disabled="true"></textarea>
+
+      <label for="converted_currency">Converted Currency</label>
+      <textarea name="converted_currency" id="converted_currency" cols="30" rows="10" disabled="true"></textarea>
+    </section>
+  </main>
+  <footer>Made with love</footer>
+
+  <!-- JavaScript Script Files -->
+  <script src="public/js/app.min.js"></script>
+</body>
+
+</html>
