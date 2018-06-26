@@ -1,8 +1,8 @@
 /**
  * Create cache when SW installs
  */
-const dataCacheName = 'currency-v4';
-const cacheName = 'currency_converter_5';
+const dataCacheName = 'currency-v1';
+const cacheName = 'currency_converter_1';
 
 const filesToCache = [
   '/ALC-7DaysofCodeChallenge/',
