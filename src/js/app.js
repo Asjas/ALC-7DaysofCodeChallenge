@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function fetchListOfCurrencies() {
     const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
-    // Before we fetch from the website itself, check if we don't have a cached version locally
+    // Before we fetch from the API itself, check if we don't have a cached version locally
     if ('caches' in window) {
       caches.match(url).then(response => {
         if (response) {
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // This will fetch the data from the url if we don't have a cached version
+    // This will fetch the data from the API if we don't have a cached version
     fetch(url)
       .then(res => res.json())
       .then(data => {
