@@ -5,7 +5,6 @@ const dataCacheName = 'currency-v4';
 const cacheName = 'currency_converter_5';
 
 const filesToCache = [
-  '/',
   '/index.html',
   '/public/css/styles.min.css',
   '/public/js/app.min.js',
