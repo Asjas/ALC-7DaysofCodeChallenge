@@ -58,6 +58,7 @@ label {
 }
 
 input[type="text"],
+input[type="text"]:disabled,
 input[type="number"] {
   width: 250px;
   padding: 4px;
@@ -67,7 +68,7 @@ input[type="text"]:disabled {
   color: #000;
   background: lightblue;
   border: 1px solid #ccc;
-  padding: 4px;
+  border-radius: 3px;
 }
 
 select {
