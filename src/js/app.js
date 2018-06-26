@@ -92,9 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // This will fetch the data from the API if we don't have a cached version
-    fetch(url, {
-      cache: 'default',
-    })
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         const currencies = Object.keys(data.results).sort();
@@ -116,9 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return 'URL Parameter cannot be undefined.';
     }
 
-    fetch(url, {
-      cache: 'default',
-    })
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         const inputAmount = getInputAmount();
