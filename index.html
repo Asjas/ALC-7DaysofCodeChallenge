@@ -26,28 +26,31 @@
   <main>
     <section class="section__input">
       <!-- Input field for the amount to be converted -->
-      <label for="amount">Enter your amount:</label>
-      <input id="amount" name="currency" type="number" min="1" value="1">
+      <label for="amount">Enter an amount:</label>
+      <input id="amount" name="amount" type="number" placeholder="Enter amount" min="1" value="1">
 
       <!-- Currency Select Fields -->
-      <label for="currency_from">From:</label>
-      <select id="currency_from" class="currency_convert_from"></select>
+      <label for="from_currency">Convert From:</label>
+      <select id="from_currency" class="currency__convert-from"></select>
 
-      <label for="currency_to">To:</label>
-      <select id="currency_to" class="currency_convert_to"></select>
+      <label for="to_currency">Convert To:</label>
+      <select id="to_currency" class="currency__convert-to"></select>
 
-      <button class="convert_currency">Convert Currency</button>
+      <button class="convert">Convert Currency</button>
     </section>
     <!-- Text areas for currencies -->
     <section class="section__output">
-      <label for="original_currency">Original Currency</label>
-      <textarea name="original_currency" id="original_currency" cols="30" rows="10" disabled="true"></textarea>
+      <label for="original_amount">Original Amount:</label>
+      <input id="original_amount" name="original_amount" type="text" disabled="true"></input>
 
-      <label for="converted_currency">Converted Currency</label>
-      <textarea name="converted_currency" id="converted_currency" cols="30" rows="10" disabled="true"></textarea>
+      <label for="converted_amount">Exchanged Amount:</label>
+      <input id="converted_amount" name="converted_amount" type="text" disabled="true"></input>
     </section>
   </main>
-  <footer>Made with love</footer>
+  <footer>
+    <p>Made with love</p>
+    <p>Powered by freecurrencyconverterapi.com</p>
+  </footer>
 
   <!-- JavaScript Script Files -->
   <script src="public/js/app.min.js"></script>

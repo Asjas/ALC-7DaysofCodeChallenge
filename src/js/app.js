@@ -1,13 +1,19 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(() => {
+    console.log('Service Worker Registered');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('body');
-  const currencyConvertFrom = document.querySelector('.currency_convert_from');
-  const currencyConvertTo = document.querySelector('.currency_convert_to');
-  const currencyButton = document.querySelector('.convert_currency');
-  const originalCurrencyTextArea = document.querySelector(
-    'textarea#original_currency',
+  const currencyConvertFrom = document.querySelector('.currency__convert-from');
+  const currencyConvertTo = document.querySelector('.currency__convert-to');
+  const button = document.querySelector('.convert');
+  const originalCurrencyInputField = document.querySelector(
+    'input#original_amount',
   );
-  const convertedCurrencyTextArea = document.querySelector(
-    'textarea#converted_currency',
+  const convertedCurrencyInputField = document.querySelector(
+    'input#converted_amount',
   );
 
   /**
@@ -50,7 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
    * Get a list of all the currencies using the API
    */
   function fetchListOfCurrencies() {
-    fetch('https://free.currencyconverterapi.com/api/v5/currencies')
+    const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
+
+    if ('caches' in window) {
+      caches.match(url).then(response => {
+        if (response) {
+          response.json().then(data => {
+            const currencies = Object.keys(data.results).sort();
+
+            addCurrenciesToDOM(currencies);
+          });
+        }
+      });
+    }
+
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         const currencies = Object.keys(data.results).sort();
@@ -103,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
    * Get the two currencies selected in the DOM and get the exchange rate
    */
   function getExchangeRate() {
-    const currency1 = document.querySelector('.currency_convert_from').value;
-    const currrency2 = document.querySelector('.currency_convert_to').value;
+    const currency1 = document.querySelector('.currency__convert-from').value;
+    const currency2 = document.querySelector('.currency__convert-to').value;
 
-    const url = buildAPIUrl(currency1, currrency2);
+    const url = buildAPIUrl(currency1, currency2);
     fetchCurrencyRate(url);
   }
 
@@ -133,15 +153,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const convertedCurrency = input * exchangeRate;
 
-    originalCurrencyTextArea.value = input;
-    convertedCurrencyTextArea.value = convertedCurrency.toFixed(2);
+    originalCurrencyInputField.value = input;
+    convertedCurrencyInputField.value = convertedCurrency.toFixed(2);
   }
 
   /**
    * Add event listeners that is needed
    */
   function addEventListeners() {
-    currencyButton.addEventListener('click', getExchangeRate);
+    button.addEventListener('click', getExchangeRate);
     body.addEventListener('keydown', e => detectEnterPressed(e));
   }
 
