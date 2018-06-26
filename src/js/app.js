@@ -7,15 +7,15 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-(function() {
-  // check for support
-  if (!('indexedDB' in window)) {
-    console.log("This browser doesn't support IndexedDB");
-    return;
-  }
+// (function() {
+//   // check for support
+//   if (!('indexedDB' in window)) {
+//     console.log("This browser doesn't support IndexedDB");
+//     return;
+//   }
 
-  const dbPromise = idb.open('test-db1', 1);
-})();
+//   const dbPromise = idb.open('test-db1', 1);
+// })();
 
 /**
  * Add all the logic of the website in the DOMContentLoaded Event Listener
