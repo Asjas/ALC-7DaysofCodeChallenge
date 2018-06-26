@@ -18,6 +18,7 @@ module.exports = {
     "no-use-before-define": 0,
     "array-callback-return": 0,
     "no-debugger": 0,
+    "no-restricted-globals": 0,
     "no-alert": 0,
     "no-unused-vars": [
       1,
