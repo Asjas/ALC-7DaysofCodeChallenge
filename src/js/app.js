@@ -1,9 +1,15 @@
+/**
+ * Register Service Worker
+ */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(() => {
     console.log('Service Worker Registered');
   });
 }
 
+/**
+ * Add all the logic of the website in the DOMContentLoaded Event Listener
+ */
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('body');
   const currencyConvertFrom = document.querySelector('.currency__convert-from');
@@ -17,17 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   /**
-   * Create "option" HTML Element and set inline value of the currency
+   * Create HTML Element and set inline value of the currency
    */
-  function createOptionNode(currency) {
-    if (currency === 'undefined') {
-      return 'Currency parameter cannot be undefined.';
+  function createNode(nodeType, currency) {
+    if (nodeType === 'undefined' || currency === 'undefined') {
+      return 'nodeType or currency parameter cannot be undefined.';
     }
 
-    const optionNode = document.createElement('option');
-    optionNode.innerText = currency;
+    const node = document.createElement(nodeType);
+    node.innerText = currency;
 
-    return optionNode;
+    return node;
   }
 
   /**
@@ -38,9 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return 'Currencies array cannot be empty or undefined.';
     }
 
+    const nodeTypeToCreate = 'option';
+
     currencies.map(currency => {
-      currencyConvertFrom.appendChild(createOptionNode(currency));
-      currencyConvertTo.appendChild(createOptionNode(currency));
+      currencyConvertFrom.appendChild(createNode(nodeTypeToCreate, currency));
+      currencyConvertTo.appendChild(createNode(nodeTypeToCreate, currency));
     });
   }
 
@@ -58,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function fetchListOfCurrencies() {
     const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
+    // Before we fetch from the website itself, check if we don't have a cached version locally
     if ('caches' in window) {
       caches.match(url).then(response => {
         if (response) {
@@ -68,8 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       });
+
+      return;
     }
 
+    // This will fetch the data from the url if we don't have a cached version
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -85,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Fetch the conversion rate between two currencies
+   * Fetch the exchange rate between two currencies
    */
   function fetchCurrencyRate(url) {
     if (url === 'undefined') {
