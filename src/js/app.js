@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
    * Create HTML Element and set inline value of the currency
    */
   function createNode(nodeType, currency) {
-    if (nodeType === 'undefined' || currency === 'undefined') {
-      return 'nodeType or currency parameter cannot be undefined.';
+    if (arguments.length !== 2) {
+      return 'You need to specify both arguments for the node to be created correctly.';
     }
 
     const node = document.createElement(nodeType);
