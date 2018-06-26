@@ -5,9 +5,10 @@ const dataCacheName = 'currency-v4';
 const cacheName = 'currency_converter_5';
 
 const filesToCache = [
-  'index.html',
-  'public/css/styles.min.css',
-  'public/js/app.min.js',
+  '/ALC-7DaysofCodeChallenge/',
+  '/ALC-7DaysofCodeChallenge/index.html',
+  '/ALC-7DaysofCodeChallenge/public/css/styles.min.css',
+  '/ALC-7DaysofCodeChallenge/public/js/app.min.js',
 ];
 
 self.addEventListener('install', e => {
