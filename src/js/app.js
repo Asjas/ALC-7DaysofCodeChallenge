@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         const exchangeRate = Object.values(data);
 
-        // Save currency exchange rate to IndexedDB for when the user is offline
+        // Save currency exchange rate to IndexedDB to be used when the user is offline
         Database.saveCurrencies(queryString, exchangeRate);
 
         calculateExchangeRate(...exchangeRate, inputAmount);
@@ -124,10 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error(
           `The following error occured while trying to get the conversion rate. ${err}`,
         );
-        console.log('Fetching currency rate from IndexedDB');
         // Get currency exchange rate when the user is offline
         Database.getCurrencies(queryString).then(data => {
-          calculateExchangeRate(data, inputAmount);
+          if (data !== 'undefined') {
+            calculateExchangeRate(data, inputAmount);
+          }
         });
       });
   }
