@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Add each currency to both select HTML Elements on the DOM
    */
   function addCurrenciesToDOM(currencies) {
-    if (currencies.length === 0 || currencies === 'undefined') {
+    if (currencies.length === 0 || typeof currencies === 'undefined') {
       return 'Currencies array cannot be empty or undefined.';
     }
 
@@ -126,9 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
         );
         // Get currency exchange rate when the user is offline
         Database.getCurrencies(queryString).then(data => {
-          if (data !== 'undefined') {
-            calculateExchangeRate(data, inputAmount);
-          }
+          if (typeof data === 'undefined') return;
+          calculateExchangeRate(data, inputAmount);
         });
       });
   }
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Build the API URL to use to get the conversion rate for a specific set of currencies
    */
   function buildAPIUrl(queryString) {
-    if (queryString === 'undefined') {
+    if (typeof queryString === 'undefined') {
       return 'The parameter passed to the function is undefined.';
     }
 
@@ -162,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Detect if the enter button has been pressed and get the exchange rate
    */
   function detectEnterPressed(event) {
-    if (event === 'undefined') {
+    if (typeof event === 'undefined') {
       return "Most likely the DOM key event listener wasn't started. 'Enter' key will not fire.";
     }
 
