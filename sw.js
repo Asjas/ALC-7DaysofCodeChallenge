@@ -1,14 +1,27 @@
 /**
  * Create cache when SW installs
  */
-const dataCacheName = 'currency-v2';
-const cacheName = 'currency_converter_2';
+const dataCacheName = 'currency-api-v3';
+const cacheName = 'static-cache-v3';
 
 const filesToCache = [
-  '/ALC-7DaysofCodeChallenge/',
+  '/ALC-7DaysofCodeChallenge/', // This root url caches normalize.css and google fonts
   './index.html',
+  './manifest.json',
   './public/css/styles.min.css',
+  './public/css/styles.min.css.map',
   './public/js/app.min.js',
+  './public/js/app.min.js.map',
+  './public/favicons/android-chrome-192x192.png',
+  './public/favicons/android-chrome-512x512.png',
+  './public/favicons/apple-touch-icon.png',
+  './public/favicons/browserconfig.xml',
+  './public/favicons/favicon-16x16.png',
+  './public/favicons/favicon-32x32.png',
+  './public/favicons/favicon.ico',
+  './public/favicons/mstile-150x150.png',
+  './public/favicons/safari-pinned-tab.svg',
+  './public/favicons/site.webmanifest',
 ];
 
 self.addEventListener('install', e => {
