@@ -1,12 +1,15 @@
 const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
+const browserSync = require('browser-sync').create();
+const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
 const cleanCSS = require('gulp-clean-css');
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
+const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const browserSync = require('browser-sync').create();
 
 gulp.task('browser-sync', () => {
   browserSync.init({
@@ -43,9 +46,9 @@ gulp.task('styles', () =>
 );
 
 // JavaScript
-gulp.task('minify-js', () =>
-  gulp
-    .src('./src/js/app.js')
+gulp.task('minify-js', () => {
+  browserify('./src/js/app.js')
+    .bundle()
     .pipe(
       plumber(function(err) {
         console.log('JavaScript Task Error');
@@ -53,6 +56,8 @@ gulp.task('minify-js', () =>
         this.emit('end');
       }),
     )
+    .pipe(source('app.js'))
+    .pipe(buffer())
     .pipe(sourcemaps.init())
     .pipe(
       babel({
@@ -68,8 +73,8 @@ gulp.task('minify-js', () =>
         },
       }),
     )
-    .pipe(gulp.dest('./public/js/')),
-);
+    .pipe(gulp.dest('./public/js/'));
+});
 
 // Build task
 gulp.task('build', ['styles', 'minify-js'], () => {
