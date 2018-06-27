@@ -21,7 +21,6 @@ const filesToCache = [
   './public/favicons/favicon.ico',
   './public/favicons/mstile-150x150.png',
   './public/favicons/safari-pinned-tab.svg',
-  './public/favicons/site.webmanifest',
 ];
 
 self.addEventListener('install', e => {
