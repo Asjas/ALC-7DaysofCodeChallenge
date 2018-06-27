@@ -1,5 +1,5 @@
 const autoprefixer = require('gulp-autoprefixer');
-const babel = require('gulp-babel');
+const babelify = require('babelify');
 const browserSync = require('browser-sync').create();
 const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
@@ -48,20 +48,16 @@ gulp.task('styles', () =>
 // JavaScript
 gulp.task('minify-js', () => {
   browserify('./src/js/app.js')
+    .transform(babelify, { presets: ['env'] })
     .bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init())
     .pipe(
       plumber(function(err) {
         console.log('JavaScript Task Error');
         console.log(err);
         this.emit('end');
-      }),
-    )
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init())
-    .pipe(
-      babel({
-        presets: ['env'],
       }),
     )
     .pipe(uglify())
