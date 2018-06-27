@@ -1,14 +1,14 @@
 /**
  * Create cache when SW installs
  */
-const dataCacheName = 'currency-v1';
-const cacheName = 'currency_converter_1';
+const dataCacheName = 'currency-v2';
+const cacheName = 'currency_converter_2';
 
 const filesToCache = [
   '/ALC-7DaysofCodeChallenge/',
-  '/ALC-7DaysofCodeChallenge/index.html',
-  '/ALC-7DaysofCodeChallenge/public/css/styles.min.css',
-  '/ALC-7DaysofCodeChallenge/public/js/app.min.js',
+  './index.html',
+  './public/css/styles.min.css',
+  './public/js/app.min.js',
 ];
 
 self.addEventListener('install', e => {
