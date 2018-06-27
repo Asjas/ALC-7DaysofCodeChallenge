@@ -19,6 +19,7 @@ module.exports = {
     "array-callback-return": 0,
     "no-debugger": 0,
     "no-restricted-globals": 0,
+    "no-case-declarations": 0,
     "no-alert": 0,
     "no-unused-vars": [
       1,

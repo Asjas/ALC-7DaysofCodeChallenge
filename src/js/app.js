@@ -1,3 +1,5 @@
+import Database from './idb';
+
 /**
  * Register Service Worker
  */
@@ -6,16 +8,6 @@ if ('serviceWorker' in navigator) {
     console.log('Service Worker Registered');
   });
 }
-
-// (function() {
-//   // check for support
-//   if (!('indexedDB' in window)) {
-//     console.log("This browser doesn't support IndexedDB");
-//     return;
-//   }
-
-//   const dbPromise = idb.open('test-db1', 1);
-// })();
 
 /**
  * Add all the logic of the website in the DOMContentLoaded Event Listener
@@ -109,37 +101,46 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Fetch the exchange rate between two currencies
    */
-  function fetchCurrencyRate(url) {
-    if (url === 'undefined') {
-      return 'URL Parameter cannot be undefined.';
+  function fetchCurrencyRate(url, queryString) {
+    if (arguments.length !== 2) {
+      return 'You need to specify both arguments for fetch to work.';
     }
+
+    const inputAmount = getInputAmount();
 
     fetch(url, {
       cache: 'default',
     })
       .then(res => res.json())
       .then(data => {
-        const inputAmount = getInputAmount();
         const exchangeRate = Object.values(data);
+
+        // Save currency exchange rate to IndexedDB for when the user is offline
+        Database.saveCurrencies(queryString, exchangeRate);
 
         calculateExchangeRate(...exchangeRate, inputAmount);
       })
-      .catch(err =>
+      .catch(err => {
         console.error(
           `The following error occured while trying to get the conversion rate. ${err}`,
-        ),
-      );
+        );
+        console.log('Fetching currency rate from IndexedDB');
+        // Get currency exchange rate when the user is offline
+        Database.getCurrencies(queryString).then(data => {
+          calculateExchangeRate(data, inputAmount);
+        });
+      });
   }
 
   /**
    * Build the API URL to use to get the conversion rate for a specific set of currencies
    */
-  function buildAPIUrl(curr1, curr2) {
-    if (arguments.length !== 2) {
-      return 'You need to specify both arguments for the URL to be built correctly.';
+  function buildAPIUrl(queryString) {
+    if (queryString === 'undefined') {
+      return 'The parameter passed to the function is undefined.';
     }
 
-    const currencyUrl = `https://free.currencyconverterapi.com/api/v5/convert?q=${curr1}_${curr2}&compact=ultra`;
+    const currencyUrl = `https://free.currencyconverterapi.com/api/v5/convert?q=${queryString}&compact=ultra`;
     return currencyUrl;
   }
 
@@ -150,8 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const currency1 = document.querySelector('.currency__convert-from').value;
     const currency2 = document.querySelector('.currency__convert-to').value;
 
-    const url = buildAPIUrl(currency1, currency2);
-    fetchCurrencyRate(url);
+    const currencyQueryString = `${currency1}_${currency2}`;
+
+    const url = buildAPIUrl(currencyQueryString);
+    fetchCurrencyRate(url, currencyQueryString);
   }
 
   /**
