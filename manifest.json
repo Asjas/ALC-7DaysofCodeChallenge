@@ -1,6 +1,6 @@
 {
   "name": "Currency Converter",
-  "short_name": "Currency Converter",
+  "short_name": "Currency",
   "icons": [
     {
       "src": "public/favicons/android-chrome-192x192.png",
@@ -9,7 +9,7 @@
     },
     {
       "src": "public/favicons/android-chrome-512x512.png",
-      "sizes": "256x256",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
