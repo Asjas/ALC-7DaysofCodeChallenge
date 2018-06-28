@@ -77,8 +77,8 @@ select {
 
 button {
   margin-top: 8px;
-  background: #44c1cc;
-  border-color: #44c1cc;
+  background: hsl(185, 57%, 30%);
+  border-color: hsl(185, 57%, 30%);
   color: #fff;
   padding: 6px;
 }
@@ -86,7 +86,8 @@ button {
 button:hover,
 button:focus,
 button:active {
-  background: #3fb3bd;
+  background: hsl(185, 57%, 36%);
+  border-color: hsl(185, 57%, 36%);
 }
 
 footer {
