@@ -27,6 +27,19 @@ export default class Database {
       });
   }
 
+  static saveCurrencyArray(key, arrayOfCurrencies) {
+    return dbPromise
+      .then(db => {
+        const transaction = db.transaction('currencies', 'readwrite');
+        const store = transaction.objectStore('currencies');
+
+        store.put(arrayOfCurrencies, key);
+      })
+      .catch(err => {
+        console.error('error saving data to database', err);
+      });
+  }
+
   static saveCurrencies(key, currencies) {
     return dbPromise
       .then(db => {

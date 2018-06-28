@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function createNode(nodeType, currency) {
     if (arguments.length !== 2) {
-      return 'You need to specify both arguments for the node to be created correctly.';
+      console.error(
+        'You need to specify both arguments for the node to be created correctly.',
+      );
     }
 
     const node = document.createElement(nodeType);
@@ -41,14 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Add each currency to both select HTML Elements on the DOM
    */
-  function addCurrenciesToDOM(currencies) {
-    if (currencies.length === 0 || typeof currencies === 'undefined') {
-      return 'Currencies array cannot be empty or undefined.';
+  function addCurrenciesToDOM(arrayOfCurrencies) {
+    if (
+      arrayOfCurrencies.length === 0 ||
+      typeof arrayOfCurrencies === 'undefined'
+    ) {
+      console.error('Currency array cannot be empty or undefined.');
     }
 
     const nodeTypeToCreate = 'option';
 
-    currencies.map(currency => {
+    arrayOfCurrencies.map(currency => {
       currencyConvertFrom.appendChild(createNode(nodeTypeToCreate, currency));
       currencyConvertTo.appendChild(createNode(nodeTypeToCreate, currency));
     });
@@ -68,34 +73,29 @@ document.addEventListener('DOMContentLoaded', () => {
   function fetchListOfCurrencies() {
     const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
-    // Before we fetch from the API itself, check if we don't have a cached version locally
-    if ('caches' in window) {
-      caches.match(url).then(response => {
-        if (response) {
-          response.json().then(data => {
-            const currencies = Object.keys(data.results).sort();
-
-            addCurrenciesToDOM(currencies);
-          });
-        }
-      });
-    }
-
     // This will fetch the data from the API if we don't have a cached version
     fetch(url, {
       cache: 'default',
     })
       .then(res => res.json())
       .then(data => {
-        const currencies = Object.keys(data.results).sort();
+        const arrayOfCurrencies = Object.keys(data.results).sort();
 
-        addCurrenciesToDOM(currencies);
+        // Save currency list to IndexedDB to be used when the user is offline
+        Database.saveCurrencyArray('allCurrencies', arrayOfCurrencies);
+
+        addCurrenciesToDOM(arrayOfCurrencies);
       })
-      .catch(err =>
+      .catch(err => {
         console.error(
           `The following error occured while trying to get the list of currencies. ${err}`,
-        ),
-      );
+        );
+        // Get currency exchange rate when the user is offline
+        Database.getCurrencies('allCurrencies').then(arrayOfCurrencies => {
+          if (typeof arrayOfCurrencies === 'undefined') return;
+          addCurrenciesToDOM(arrayOfCurrencies);
+        });
+      });
   }
 
   /**
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function fetchCurrencyRate(url, queryString) {
     if (arguments.length !== 2) {
-      return 'You need to specify both arguments for fetch to work.';
+      console.error('You need to specify both arguments for fetch to work.');
     }
 
     const inputAmount = getInputAmount();
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function buildAPIUrl(queryString) {
     if (typeof queryString === 'undefined') {
-      return 'The parameter passed to the function is undefined.';
+      console.error('The parameter passed to the function is undefined.');
     }
 
     const currencyUrl = `https://free.currencyconverterapi.com/api/v5/convert?q=${queryString}&compact=ultra`;
@@ -162,7 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function detectEnterPressed(event) {
     if (typeof event === 'undefined') {
-      return "Most likely the DOM key event listener wasn't started. 'Enter' key will not fire.";
+      console.error(
+        "Most likely the DOM key event listener wasn't started. 'Enter' key will not fire.",
+      );
     }
 
     if (event.keyCode === 13) {
@@ -175,7 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function calculateExchangeRate(exchangeRate, input) {
     if (arguments.length !== 2) {
-      return 'You need to specify both arguments for the exchange rate to be calculated correctly.';
+      console.error(
+        'You need to specify both arguments for the exchange rate to be calculated correctly.',
+      );
     }
 
     const convertedCurrency = input * exchangeRate;
