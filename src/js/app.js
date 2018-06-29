@@ -3,11 +3,11 @@ import Database from './idb';
 /**
  * Register Service Worker
  */
-// if ('serviceWorker' in navigator) {
-//   navigator.serviceWorker.register('sw.js').then(() => {
-//     console.log('Service Worker Registered');
-//   });
-// }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => {
+    console.log('Service Worker Registered');
+  });
+}
 
 /**
  * Add all the logic of the website in the DOMContentLoaded Event Listener
@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function fetchListOfCurrencies() {
     const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
-    // This will fetch the data from the API if we don't have a cached version
     fetch(url, {
       cache: 'default',
     })
@@ -103,7 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function fetchCurrencyRate(url, queryString) {
     if (arguments.length !== 2) {
-      console.error('You need to specify both arguments for fetch to work.');
+      console.error(
+        'You need to specify both arguments for fetch to query the currency exchange rate.',
+      );
     }
 
     const inputAmount = getInputAmount();
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function buildAPIUrl(queryString) {
     if (typeof queryString === 'undefined') {
-      console.error('The parameter passed to the function is undefined.');
+      console.error('Please provide a query string to build the API URL.');
     }
 
     const currencyUrl = `https://free.currencyconverterapi.com/api/v5/convert?q=${queryString}&compact=ultra`;
@@ -150,10 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function getExchangeRate() {
     const currency1 = document.querySelector('.currency__convert-from').value;
     const currency2 = document.querySelector('.currency__convert-to').value;
-
     const currencyQueryString = `${currency1}_${currency2}`;
-
     const url = buildAPIUrl(currencyQueryString);
+
     fetchCurrencyRate(url, currencyQueryString);
   }
 
