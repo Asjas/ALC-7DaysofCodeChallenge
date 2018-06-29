@@ -1,14 +1,14 @@
 /**
  * Create cache when SW installs
  */
-const cacheName = 'static-cache-v2';
+const cacheName = 'static-cache-v3';
 
 const filesToCache = [
-  '/ALC-7DaysofCodeChallenge/', // This root url caches normalize.css and google fonts
   './index.html',
   './manifest.json',
   './public/css/styles.min.css',
   './public/css/styles.min.css.map',
+  './public/css/normalize.min.css',
   './public/js/app.min.js',
   './public/js/app.min.js.map',
   './public/favicons/android-chrome-192x192.png',

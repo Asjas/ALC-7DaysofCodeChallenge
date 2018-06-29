@@ -3,11 +3,11 @@ import Database from './idb';
 /**
  * Register Service Worker
  */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then(() => {
-    console.log('Service Worker Registered');
-  });
-}
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker.register('sw.js').then(() => {
+//     console.log('Service Worker Registered');
+//   });
+// }
 
 /**
  * Add all the logic of the website in the DOMContentLoaded Event Listener
