@@ -1,11 +1,10 @@
 /**
  * Create cache when SW installs
  */
-const cacheName = 'static-cache-v2';
+const cacheName = 'static-cache-v1';
 
 const filesToCache = [
   '/ALC-7DaysofCodeChallenge/',
-  './index.html',
   './manifest.json',
   './public/css/styles.min.css',
   './public/css/styles.min.css.map',
