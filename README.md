@@ -5,6 +5,8 @@
 ## Details
 This is the final project in the Google Scholarship with Andela Program.
 
+This project is hosted on Github Pages. Click [here](https://asjas.github.io/ALC-7DaysofCodeChallenge/) to see it.
+
 ## Getting the project up and running
 
 These instructions will allow you to get a copy of the project up and running on your local machine for development and testing purposes.
